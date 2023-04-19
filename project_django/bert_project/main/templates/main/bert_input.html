@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block content_1 %}
+
+  <div style='text-align:center;'>
+
+    <h1 id='page_title'>
+      Sentiment analysis using KoBERT
+    </h1>
+
+    <form action="{% url 'main:bert_predict' %}" method="POST" class="main-form">
+      {% csrf_token %}
+
+      <h2 style='width:50%; margin:auto;'>감정 분석을 위한 문장을 적어주세요! </h2><br>
+
+      <textarea name="target_sentence" style="width: 30%; height: 5em;"
+        placeholder="ex) 이거 살까말까 고민 많이 했는데 정작 써보니 나쁘지 않네요 곧 재구매 예정입니다!">
+      </textarea><br>
+
+      <input type="submit" value='Your sentiment counts!' id='input_submit'></input>
+
+    </form>
+
+    <div style="width:50%; margin:auto; padding-top:4em;">
+      <p style='text-align: left; margin-left:2.5em; margin-bottom: 0.5em;'> Used dataset : </p>
+      {{ reviews_df_html | safe }}
+    </div>
+
+  </div>
+
+  <div id='nav_foot'>
+    <h2><a href="{% url 'index' %}">Return to home</a></h2>
+  </div>
+
+{% endblock %}

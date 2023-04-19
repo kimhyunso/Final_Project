@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block content_1 %}
+
+  <div style='text-align:center;'>
+
+    <h1 id='page_title'>
+      Sentiment analysis result - KoBERT
+    </h1>
+
+    <hr>
+
+    <h2 class='semi-headline'>Target review: </h2><br>
+    <p class='result_p'>{{ target_sentence }}</p>
+
+    <hr>
+
+    <h2 class='semi-headline'>Analyzed sentiment value : </h2><br>
+
+    {% if '긍정' in result_bert %}
+      <p class='result_positive'>{{ result_bert }}</p>
+    {% else %}
+      <p class='result_negative'>{{ result_bert }}</p>
+    {% endif %}
+
+    <hr>
+
+  </div>
+
+  <div id='nav_foot'>
+    <h2><a href="{% url 'main:bert_input' %}">Return to previous page</a></h2>
+    <h2><a href="{% url 'index' %}">Return to home</a></h2>
+  </div>
+
+{% endblock %}
