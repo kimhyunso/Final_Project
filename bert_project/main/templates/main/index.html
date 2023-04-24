@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+      <div class="center">
+        <h1>가전제품 리뷰 기반</h1>
+        <h2>텍스트 분석 & 스코어링 및 추천 서비스 검색</h2>
+      </div>
+    <form action="./detail.html" method="GET">
+        <div class="container">
+            <div class="search">
+                <input type="text" class="form-control" placeholder="제품을 입력하세요." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                <input class="btn btn-primary" type="submit" value="제출">
+                 <i class="fa fa-search"></i>
+              </button>
+            </div>
+         </div>
+    </form>
+
+{% endblock content %}
+
+
+
