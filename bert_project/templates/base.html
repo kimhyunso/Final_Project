@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>가전제품 리뷰</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="./style_one.css">
+    <link rel="stylesheet" href="{%static 'css/style_one.css'%}">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -17,13 +18,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="./index.html">Home<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:bert_input' %}">Detail</a>
+              <a class="nav-link" href="">Detail</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./my_page.html">My page</a>
+              <a class="nav-link" href="">My page</a>
             </li>
           </ul>
         </ul>
@@ -35,27 +36,7 @@
       </div>
       </nav class="center">
 
-      <div class="center">
-        <h1>가전제품 리뷰 기반</h1>
-        <h2>텍스트 분석 & 스코어링 및 추천 서비스 검색</h2>
-      </div>
-    <form action="./detail.html" method="GET">
-        <div class="container">
-            <div class="search">
-                <input type="text" class="form-control" placeholder="제품을 입력하세요." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                <input class="btn btn-primary" type="submit" value="제출">
-                 <i class="fa fa-search"></i>
-              </button>
-            </div>
-         </div>
-         {% for p in posts %}
-          <hr/>
-          <h3>{{ p.title }}</h3>
-          <h4>{{p.created_at}}</h4>
-          <p>{{p.content}}</p>
-         {% endfor %}
-    </form>
+      {% block content %}{% endblock content %}
 
 </html>
 </body>

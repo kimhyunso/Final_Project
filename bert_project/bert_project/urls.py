@@ -17,9 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from main import views
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'), # 127.0.0.1:8000/
-    path('electronics/', include('main.urls')), # 127.0.0.1:8000/electronics/
+    path('', include('main.urls')), # 127.0.0.1:8000/electronics/
 ]
