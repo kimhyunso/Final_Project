@@ -16,7 +16,7 @@ def index(request):
 @require_safe
 def detail(request, keyword):
     context = {
-        'lists' : ProductInfo.objects.filter(category1=keyword),
+        'lists' : ProductInfo.objects.distinct().filter(category1=keyword),
     }
     return render(request, 'main/detail.html', context)
 
@@ -33,25 +33,16 @@ def info(request):
     conn = sqlite3.connect('db.sqlite3')
     try:
         cursor = conn.cursor()
-        sql = f"SELECT * FROM main_productinfo WHERE category1={keyword};"
-
-        cursor.execute(sql)
-        result = cursor.fetchall()
-
-        if result != None:
-            return redirect('main:detail', keyword)
+        sql = "INSERT OR IGNORE INTO main_productinfo(title, link, imageURL, price, maker, category1, category2) VALUES(?, ?, ?, ?, ?, ?, ?);"
         
-        else:
-            sql = "INSERT INTO main_productinfo(title, link, imageURL, price, maker, category1, category2) VALUES(?, ?, ?, ?, ?, ?, ?);"
-            
-            rows = []
-            for idx, row in info_df.iterrows():
-                rows.append(row)
+        rows = []
+        for idx, row in info_df.iterrows():
+            rows.append(row)
 
 
-            cursor.executemany(sql, rows)
-            conn.commit()
-            conn.close()
+        cursor.executemany(sql, rows)
+        conn.commit()
+        conn.close()
 
     except:
         conn.rollback()
