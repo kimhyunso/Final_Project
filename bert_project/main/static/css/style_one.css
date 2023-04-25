@@ -19,14 +19,8 @@ body{
   font-family: 'Open Sans', sans-serif;
 }
 
-
-.search {
-  margin-left: 5%;
-  margin-top: 50px;
-  width: 90%;
-  height: 80%;
-  position: relative;
-  display: flex;
+card-body {
+  margin-top: 100px;
 }
 
 footer {

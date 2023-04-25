@@ -6,7 +6,21 @@ body{
   
 h1{
     text-align: center;
-    margin-top: 50px;
-    font-size: 30px;
+    margin-top: 300px;
+    font-size: 40px;
+    margin-bottom: 100px;
 
+}
+
+.stretch {
+  margin: 0 auto;
+  border: 2px solid;
+  background-color: rgb(59, 110, 251);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: stretch;
+  margin: 10px;
+  width: 500px;
+  height: 280px;
 }
