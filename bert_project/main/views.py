@@ -14,13 +14,16 @@ def index(request):
     context = {'posts':posts}
     return render(request, 'main/index.html', context)
 
-def detail(request):
+def detail(request, info_df):
+    print(info_df['reviews'])
     context={}
     return render(request, 'main/detail.html', context)
 
-
 def info(request):
-    # search()
+    info_df = search(request.POST['keyword'])
+    context = {
+        'info' : info_df,
+    }
 
-    return redirect('main:detail')
+    return redirect('main:detail', context)
 
