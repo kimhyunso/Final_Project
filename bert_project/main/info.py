@@ -29,12 +29,11 @@ def search(keyword):
     columns = ['title', 'link', 'image', 'price', 'maker', 'category1', 'category2']
 
     url = f'https://openapi.naver.com/v1/search/shop?&query={keyword}&display=8'
-    time.sleep(3.2)
 
     response = requests.get(url, headers=headers)
-    # driver = webdriver.Chrome()
+    time.sleep(2.8)
+    
     line = response.json()
-
     for item in line['items']:
         item_list.append([item['title'], item['link'], item['image'], item['lprice'], item['maker'], item['category3'], item['category4']])
 
