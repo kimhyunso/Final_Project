@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_safe
 from django.utils import timezone
 import pandas as pd
-from .info import search, reviews
+from .info import search
+from .forms import ProductInfoForm, ProductSearchForm
 from .models import ProductInfo
 import sqlite3
 
@@ -16,7 +17,7 @@ def index(request):
 @require_safe
 def detail(request, keyword):
     context = {
-        'lists' : ProductInfo.objects.filter(category1=keyword),
+        'lists' : ProductInfo.objects.distinct().filter(category1=keyword),
     }
     return render(request, 'main/detail.html', context)
 
@@ -33,31 +34,19 @@ def info(request):
     conn = sqlite3.connect('db.sqlite3')
     try:
         cursor = conn.cursor()
-        sql = f"SELECT * FROM main_productinfo WHERE category1={keyword};"
-
-        cursor.execute(sql)
-        result = cursor.fetchall()
-
-        if result != None:
-            return redirect('main:detail', keyword)
+        sql = "INSERT OR IGNORE INTO main_productinfo(title, link, imageURL, price, maker, category1, category2) VALUES(?, ?, ?, ?, ?, ?, ?);"
         
-        else:
-            sql = "INSERT INTO main_productinfo(title, link, imageURL, price, maker, category1, category2) VALUES(?, ?, ?, ?, ?, ?, ?);"
-            
-            rows = []
-            for idx, row in info_df.iterrows():
-                rows.append(row)
+        rows = []
+        for idx, row in info_df.iterrows():
+            rows.append(row)
 
 
-            cursor.executemany(sql, rows)
-            conn.commit()
-            conn.close()
+        cursor.executemany(sql, rows)
+        conn.commit()
+        conn.close()
 
     except:
         conn.rollback()
         return redirect('main:index')
 
     return redirect('main:detail', keyword)
-
-
-

@@ -1,43 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
-      <div class="container">
-        <div class="row my-3">
-          <div class="col-md-6 col-lg-5">
-            <h1>리뷰</h1>
-      <!-- Blog post-->
-        <a href="#!"><img class="card-img-top" src="./images/smail.png" alt="..." /></a>
-        <div class="card-body">
-            <h2 class="card-title h4">냉장고</h2>
-            <p class="card-text">리뷰가 좋아요</p>
-        </div>
-    </div>
-
-    <div class="container">
-      <div class="row my-3">
-        <div class="col-md-6 col-lg-5">
-          <h1>리뷰</h1>
-    <!-- Blog post-->
-      <a href="#!"><img class="card-img-top" src="./images/smail.png" alt="..." /></a>
-      <div class="card-body">
-          <h2 class="card-title h4">냉장고</h2>
-          <p class="card-text">리뷰가 좋아요</p>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="row my-3">
-        <div class="col-md-6 col-lg-5">
-          <h1>리뷰</h1>
-    <!-- Blog post-->
-      <a href="#!"><img class="card-img-top" src="./images/smail.png" alt="..." /></a>
-      <div class="card-body">
-          <h2 class="card-title h4">냉장고</h2>
-          <p class="card-text">리뷰가 좋아요</p>
+<section class="text-center">
+  <div class="container">
+      <div class="row">
+        {% for list in lists %}
+            <div class="col-lg-4">
+              <div class="card" style="background: #7bc4ff">
+                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                  <div class="features-icons-icon d-flex"><i class="bi-window m-auto text-primary"></i></div>
+                    <img src={{list.imageURL}} class="img-thumbnail" alt="...">
+                    <h5 class="card-title">제목 : {{list.title}}</h5>
+                    <h5 class="card-title">가격 : {{list.price}}원</h5>
+                    <h5 class="card-title">제조사 : {{list.maker}}</h5>
+                    <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
+                    <a href="{{list.link}}" class="btn btn-primary stretched-link">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
       </div>
   </div>
+</section>
 
-  {% for list in lists %}
-  {{list.title}}
-  {% endfor %}
-
-  {% endblock content %}
+{% endblock content %}
