@@ -26,7 +26,7 @@ $RECYCLE.BIN/
 *.csv
 *.pdf
 *.exe
-/API_KEY.txt
+API_KEY.txt
 *.chromedriver
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv
