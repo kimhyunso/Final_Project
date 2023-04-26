@@ -15,7 +15,7 @@ h1{
 .stretch {
   margin: 0 auto;
   border: 2px solid;
-  background-color: rgb(59, 110, 251);
+  background-color: rgb(149, 165, 251);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

@@ -1,20 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<form action="{%url 'main:info'%}" method="post">
+  {% csrf_token %}
+
         <h1>가전제품 리뷰 기반</h1>
         <h2>텍스트 분석 & 스코어링 및 추천 서비스 검색</h2>
-    <form action="{%url 'main:info'%}" method="post">
-      {% csrf_token %}
       
-      <div class="container">
+        <div class="container">
+          <div class="input-group mb-3">
           <div class="search">
               <input type="text" name="keyword" class="form-control" placeholder="제품을 입력하세요." aria-label="Recipient's username" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-              <input class="btn btn-primary" type="submit" value="제출">
-                <i class="fa fa-search"></i>
+              <input class="btn btn-primary" type="submit" value="제출"></input>
+            </div> 
+          </div>
           </div>
         </div>
     </form>
+
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2">@example.com</span>
+      </div>
+    </div>
 
 {% endblock content %}
 
