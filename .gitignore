@@ -26,7 +26,7 @@ $RECYCLE.BIN/
 *.csv
 *.pdf
 *.exe
-/API_KEY.txt
+API_KEY.txt
 *.chromedriver
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv
@@ -45,6 +45,7 @@ $RECYCLE.BIN/
 pyvenv.cfg
 .venv
 pip-selfcheck.json
+migrations
 
 # End of https://www.toptal.com/developers/gitignore/api/venv
 
