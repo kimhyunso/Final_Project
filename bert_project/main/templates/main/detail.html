@@ -1,26 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
-  <div class="row row-cols-1 row-cols-md-3">
+
+{% for list in lists %}
+<section class="features-icons bg-light text-center">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-4">
+              <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                  <div class="features-icons-icon d-flex"><i class="bi-window m-auto text-primary"></i></div>
+                  <img src={{list.imageURL}} class="img-thumbnail" alt="...">
+                  <h5 class="card-title">제목 : {{list.title}}</h5>
+                  <h5 class="card-title">가격 : {{list.price}}원</h5>
+                  <h5 class="card-title">제조사 : {{list.maker}}</h5>
+                  <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
+                  <a href="{{list.link}}" class="btn btn-primary stretched-link">Go somewhere</a>
+              </div>
+          </div>
+          <div class="col-lg-4">
+              <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                  <div class="features-icons-icon d-flex"><i class="bi-layers m-auto text-primary"></i></div>
+                  <img src={{list.imageURL}} class="img-thumbnail" alt="...">
+                  <h5 class="card-title">제목 : {{list.title}}</h5>
+                  <h5 class="card-title">가격 : {{list.price}}원</h5>
+                  <h5 class="card-title">제조사 : {{list.maker}}</h5>
+                  <p class="lead mb-0">Featuring the latest build of the new Bootstrap 5 framework!</p>
+                  <a href="{{list.link}}" class="btn btn-primary stretched-link">Go somewhere</a>
+              </div>
+          </div>
+          <div class="col-lg-4">
+              <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                  <div class="features-icons-icon d-flex"><i class="bi-terminal m-auto text-primary"></i></div>
+                  <img src={{list.imageURL}} class="img-thumbnail" alt="...">
+                  <h5 class="card-title">제목 : {{list.title}}</h5>
+                  <h5 class="card-title">가격 : {{list.price}}원</h5>
+                  <h5 class="card-title">제조사 : {{list.maker}}</h5>
+                  <p class="lead mb-0">Ready to use with your own content, or customize the source files!</p>
+                                  <a href="{{list.link}}" class="btn btn-primary stretched-link">Go somewhere</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+{% endfor %}
+{% comment %} <div class="row">
     <div class="container">
+      <div class="col my-3 row my-3">
+        <div class="w-30 h-30 p-3" style="background-color: #249afb">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
 
-      {% for list in lists %}
-
-        <div class="col my-3 row my-3">
-          <div class="w-30 h-30 p-3" style="background-color: #249afb">
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
+                {% for list in lists %}
                 <img src={{list.imageURL}} class="img-thumbnail" alt="...">
                 <h5 class="card-title">제목 : {{list.title}}</h5>
                 <h5 class="card-title">가격 : {{list.price}}원</h5>
                 <h5 class="card-title">제조사 : {{list.maker}}</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 <a href="{{list.link}}" class="btn btn-primary stretched-link">Go somewhere</a>
+                {% endfor %}
               </div>
             </div>
           </div>
         </div>     
-      {% endfor %}
+      
     </div>
-</div>
+</div> {% endcomment %}
 
 {% endblock content %}
