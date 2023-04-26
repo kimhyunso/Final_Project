@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_safe
 from django.utils import timezone
 import pandas as pd
-from .info import search
+from .info import search, comment_reviews
 from .forms import ProductInfoForm, ProductSearchForm
 from .models import ProductInfo
 import sqlite3
@@ -50,3 +50,14 @@ def info(request):
         return redirect('main:index')
 
     return redirect('main:detail', keyword)
+
+
+@require_http_methods(['POST'])
+def reviews(request):
+    link = request.POST['link']
+
+    reviews_df = comment_reviews(link)
+
+    print(reviews_df)
+    return render(request, 'main/index.html')
+
