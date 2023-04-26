@@ -45,6 +45,7 @@ API_KEY.txt
 pyvenv.cfg
 .venv
 pip-selfcheck.json
+migrations
 
 # End of https://www.toptal.com/developers/gitignore/api/venv
 

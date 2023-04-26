@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <section class="text-center">
   <div class="container">
       <div class="row">
@@ -14,7 +13,11 @@
                     <h5 class="card-title">가격 : {{list.price}}원</h5>
                     <h5 class="card-title">제조사 : {{list.maker}}</h5>
                     <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
-                    <a href="{{list.link}}" class="btn btn-primary stretched-link">Go somewhere</a>
+                    <form action="{% url 'main:reviews'%}" method="POST">
+                      <input type="hidden" name="link" value="{{list.link}}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-primary stretched-link">Go somewhere</button>
+                    </form>
                 </div>
               </div>
             </div>
