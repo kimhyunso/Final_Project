@@ -55,7 +55,7 @@ def reviews(link):
             driver.find_element(By.CSS_SELECTOR, '#section_review > div.pagination_pagination__JW7zT > a.pagination_next__3_3ip').click()
             page_no = 2
             
-        time.sleep(1.8)
+        time.sleep(3.8)
         driver.find_element('xpath', f'//*[@id="section_review"]/div[3]/a[{page_no}]').click()
         
         time.sleep(2.8)
