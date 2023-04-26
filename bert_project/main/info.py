@@ -4,6 +4,10 @@ import time
 import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
+from selenium import webdriver
+import re
+import time
+from selenium.webdriver.common.by import By
 
 
 def search(keyword):
@@ -39,4 +43,29 @@ def search(keyword):
 
 
     return pd.DataFrame(item_list, columns=columns)
+
+def reviews(link):
+    driver = webdriver.Chrome()
+    driver.get(link)
+    time.sleep(2.3)
+    
+    page_no = 1
+    for _ in range(5):
+        if page_no == 11:
+            driver.find_element(By.CSS_SELECTOR, '#section_review > div.pagination_pagination__JW7zT > a.pagination_next__3_3ip').click()
+            page_no = 2
+            
+        time.sleep(1.8)
+        driver.find_element('xpath', f'//*[@id="section_review"]/div[3]/a[{page_no}]').click()
+        
+        time.sleep(2.8)
+        response = driver.find_elements('xpath', '//*[@id="section_review"]/ul/li/div[2]/div[1]/p')
+        
+        for review in response:
+            reviews.append(review.text)
+        
+        page_no += 1
+    
+    return pd.DataFrame(reviews, columns=['comments'])
+
 
