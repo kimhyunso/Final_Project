@@ -44,11 +44,16 @@ def search(keyword):
 
     return pd.DataFrame(item_list, columns=columns)
 
-def reviews(link):
+def comment_reviews(link):
+    reviews = []
+
     driver = webdriver.Chrome()
     driver.get(link)
     time.sleep(2.3)
-    
+
+    driver.find_element(By.CSS_SELECTOR, '#wrap > div.product_bridge_product__n_89z > a:nth-child(5)').click()
+    time.sleep(3.2)
+
     page_no = 1
     for _ in range(5):
         if page_no == 11:
