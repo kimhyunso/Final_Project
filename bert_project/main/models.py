@@ -1,7 +1,7 @@
 from django.db import models
 
 class ProductInfo(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, unique=True)
     link = models.TextField()
     imageURL = models.TextField()
     price = models.IntegerField()

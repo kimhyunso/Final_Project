@@ -28,7 +28,7 @@ def info(request):
     conn = sqlite3.connect('db.sqlite3')
     try:
         cursor = conn.cursor()
-        sql = 'INSERT INTO main_productinfo(title, link, imageURL, price, maker, category1, category2) VALUES(?, ?, ?, ?, ?, ?, ?);'
+        sql = "INSERT OR IGNORE INTO main_productinfo(title, link, imageURL, price, maker, category1, category2) VALUES(?, ?, ?, ?, ?, ?, ?);"
         
         rows = []
         for idx, row in info_df.iterrows():
