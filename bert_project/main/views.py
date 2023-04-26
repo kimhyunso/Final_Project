@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_safe
 from django.utils import timezone
 import pandas as pd
-from .info import search, reviews
+from .info import search
+from .forms import ProductInfoForm, ProductSearchForm
 from .models import ProductInfo
 import sqlite3
 
@@ -49,6 +50,3 @@ def info(request):
         return redirect('main:index')
 
     return redirect('main:detail', keyword)
-
-
-
