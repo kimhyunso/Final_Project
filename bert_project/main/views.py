@@ -3,11 +3,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_safe
 from django.utils import timezone
 import pandas as pd
-from .info import search, comment_reviews
+import numpy as np
+from .info import search, comment_reviews, predict_sentiment
 from .forms import ProductInfoForm, ProductSearchForm
 from .models import ProductInfo
 import sqlite3
-
+from django.conf import settings
+from . import inference_bert
 
 @require_safe
 def index(request):
@@ -58,6 +60,16 @@ def reviews(request):
 
     reviews_df = comment_reviews(link)
 
-    print(reviews_df)
-    return render(request, 'main/index.html')
+    # 여기부터
+
+    # target_sentence = request.POST['target_sentence']
+
+    tokenizer = settings.TOKENIZER_KOBERT
+    model = settings.MODEL_KOBERT
+
+    result_bert = predict_sentiment(reviews_df['comments'][0], tokenizer, model)
+    print(result_bert)
+    # context = {'target_sentence':reviews_df['comments'][0], 'result_bert':result_bert}
+    
+    # return render(request, 'main/index.html', context)
 

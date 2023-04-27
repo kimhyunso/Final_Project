@@ -8,7 +8,15 @@ from selenium import webdriver
 import re
 import time
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 
+# jsy 추가 ##################################################################
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support import expected_conditions as EC
+
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+#############################################################################
 
 def search(keyword):
 
@@ -47,12 +55,19 @@ def search(keyword):
 def comment_reviews(link):
     reviews = []
 
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(chrome_options=chrome_options)  # chrome_options jys 추가해봄
     driver.get(link)
-    time.sleep(2.3)
+    # time.sleep(2.3)
+    
+    # jys 대기 추가#####
+    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#wrap > div.product_bridge_product__n_89z > a:nth-child(5)')))
+    element.click()
+    ###################
 
-    driver.find_element(By.CSS_SELECTOR, '#wrap > div.product_bridge_product__n_89z > a:nth-child(5)').click()
-    time.sleep(3.2)
+    # driver.find_element(By.CSS_SELECTOR, '#wrap > div.product_bridge_product__n_89z > a:nth-child(5)').click()
+    # time.sleep(3.2)
+    
+    
 
     page_no = 1
     for _ in range(5):
@@ -60,17 +75,51 @@ def comment_reviews(link):
             driver.find_element(By.CSS_SELECTOR, '#section_review > div.pagination_pagination__JW7zT > a.pagination_next__3_3ip').click()
             page_no = 2
             
-        time.sleep(3.8)
-        driver.find_element('xpath', f'//*[@id="section_review"]/div[3]/a[{page_no}]').click()
+        # time.sleep(3.8)
+        # driver.find_element('xpath', f'//*[@id="section_review"]/div[3]/a[{page_no}]').click()
         
-        time.sleep(2.8)
-        response = driver.find_elements('xpath', '//*[@id="section_review"]/ul/li/div[2]/div[1]/p')
+        element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, f'//*[@id="section_review"]/div[3]/a[{page_no}]')))
+        element.click()
+        
+        # time.sleep(2.8)
+        # response = driver.find_elements('xpath', '//*[@id="section_review"]/ul/li/div[2]/div[1]/p')
+        
+        elements = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.XPATH, '//*[@id="section_review"]/ul/li/div[2]/div[1]/p')))
+        response = [element.text for element in elements]
+        
         
         for review in response:
-            reviews.append(review.text)
+            reviews.append(review)
         
         page_no += 1
     
+    driver.quit()  # jys 추가
     return pd.DataFrame(reviews, columns=['comments'])
+
+
+
+def predict_sentiment(sentence, tokenizer, model):
+
+    SEQ_LEN = 128
+
+    # Tokenizing / Tokens to sequence numbers / Padding
+    encoded_dict = tokenizer.encode_plus(text=re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", sentence),
+                                         padding='max_length',
+                                         truncation = True,
+                                         max_length=SEQ_LEN) # SEQ_LEN == 128
+
+    token_ids = np.array(encoded_dict['input_ids']).reshape(1, -1) # shape == (1, 128) : like appending to a list
+    token_masks = np.array(encoded_dict['attention_mask']).reshape(1, -1)
+    token_segments = np.array(encoded_dict['token_type_ids']).reshape(1, -1)
+
+    new_inputs = (token_ids, token_masks, token_segments)
+
+    # Prediction
+    prediction = model.predict(new_inputs)
+    predicted_probability = np.round(np.max(prediction) * 100, 2)
+    predicted_class = ['부정', '긍정'][np.argmax(prediction, axis=1)[0]]
+    result = "{}% 확률로 {} 리뷰입니다.".format(predicted_probability, predicted_class)
+
+    return result
 
 
