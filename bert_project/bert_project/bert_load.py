@@ -19,7 +19,7 @@ transformers.logging.set_verbosity(transformers.logging.ERROR)
 tf.get_logger().setLevel(logging.ERROR)
 
 
-def create_bert_model(max_length=128):
+def create_bert_model(max_length=256):
     bert_base_model = TFBertModel.from_pretrained("monologg/kobert", from_pt=True)
 
     input_token_ids    = layers.Input((max_length,), dtype=tf.int32, name='input_token_ids')
