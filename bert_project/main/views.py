@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_safe
 from django.utils import timezone
@@ -16,7 +16,7 @@ from collections import Counter
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import os
-from django.core.files.storage import FileSystemStorage
+import json
 
 
 @require_safe
@@ -64,12 +64,10 @@ def info(request):
 
 @require_http_methods(['POST'])
 def reviews(request):
-    link = request.POST['link']
 
+    jsonObject = json.loads(request.body)
+    link = jsonObject.get('link')
     reviews_df = comment_reviews(link)
-
-    # 여기부터
-
 
     tokenizer = settings.TOKENIZER_KOBERT
     model = settings.MODEL_KOBERT
@@ -78,8 +76,8 @@ def reviews(request):
     print(result_bert)
     
     # 긍정리뷰와 부정리뷰 분류할 빈 리스트
-    good_reviews = []
-    bad_reviews = []
+    good_comment = ''
+    bad_comment = ''
     
     # 평균 리뷰 점수를 구하고, 긍정 부정 리뷰를 분류하는 코드
     score = 0
@@ -87,7 +85,6 @@ def reviews(request):
     cnt = 0
     
     for review in reviews_df['comments']:
-        
         if len(review) > 400:
             result_bert = predict_sentiment(review[-400:], tokenizer, model)
         else:
@@ -97,33 +94,28 @@ def reviews(request):
         cnt += 1
         
         if result_bert[1] == '긍정':
-            good_reviews += review
+            good_comment += ' '.join(review)
         else:
-            bad_reviews += review
-            
+            bad_comment += ' '.join(review)
+
     # print('평균점수: ', round(sum / cnt, 2))
-    
-    good_token = tokenizer(good_reviews)
-    bad_token = tokenizer(bad_reviews)
-    
+
+    good_token = sentence_tokenizer(good_comment)
+    bad_token = sentence_tokenizer(bad_comment)
+
     font_path = r'C:/Windows/Fonts/malgun.ttf'
     
     wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(count_vectorization(good_token))
-    plt.figure(figsize=(10, 5))
-    plt.axis('off')
-    plt.imshow(wc, interpolation='bilinear')
     wc.to_file('./media/good_reviews.png')
     
     wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(count_vectorization(bad_token))
-    plt.figure(figsize=(10, 5))
-    plt.axis('off')
-    plt.imshow(wc, interpolation='bilinear')
     wc.to_file('./media/bad_reviews.png')
     
-    # context = {'target_sentence':reviews_df['comments'][0], 'result_bert':result_bert}
-    
-    # return render(request, 'main/index.html', context)
+    context = {
+        'result_bert' : result_bert,
+    }
 
+    return JsonResponse(context)
 
 
 def count_vectorization(token):
@@ -135,11 +127,10 @@ def count_vectorization(token):
     return word_count_dict
 
 
-
-def tokenizer(sentence):
+def sentence_tokenizer(sentence):
     okt = Okt()
-    stopwords = ['하다', '힘그셨을텐데', '훌륭하다']
-    sentence = re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", sentence)
+    stopwords = ['하다', '힘그셨을텐데']
+    sentence = re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", str(sentence))
     raw_pos_tagged = okt.pos(sentence, stem=True) # POS Tagging with stemming
 
     sentence_tokenized = []

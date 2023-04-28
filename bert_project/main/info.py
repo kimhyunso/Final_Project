@@ -9,14 +9,11 @@ import re
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-
-# jsy 추가 ##################################################################
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 
 chrome_options = Options()
 chrome_options.add_argument('--headless')
-#############################################################################
 
 def search(keyword):
 
@@ -66,8 +63,6 @@ def comment_reviews(link):
 
     # driver.find_element(By.CSS_SELECTOR, '#wrap > div.product_bridge_product__n_89z > a:nth-child(5)').click()
     # time.sleep(3.2)
-    
-    
 
     page_no = 1
     for _ in range(5):
@@ -127,5 +122,3 @@ def predict_sentiment(sentence, tokenizer, model):
     result = [score, predicted_class]
 
     return result
-
-
