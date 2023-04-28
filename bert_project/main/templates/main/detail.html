@@ -1,6 +1,73 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+
+<style type="text/css" >
+  .wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+      position: fixed;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+      background: rgba(0,0,0,0.2); /*not in ie */
+      filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');
+  }
+  
+  .wrap-loading div{ /*로딩 이미지*/
+        position: fixed;
+        top:50%;
+        left:50%;
+        margin-left: -21px;
+        margin-top: -21px;
+  
+  }
+
+  .display-none{
+      display:none;
+  }
+</style>
+    
+
+
+<script>
+function clicked(link){
+  const param = {
+    'link' : link
+  }
+  $.ajax({
+    url : '{% url 'main:reviews' %}',
+    type : 'POST',
+    headers : {
+      'X-CSRFTOKEN' : '{{csrf_token}}'
+    },
+    data : JSON.stringify(param),
+    success:function(context){
+      console.log(context['result_bert']);
+    },
+    beforeSend:function(){
+      $(".container").addClass('display-none');
+      $(".wrap-loading").removeClass('display-none');
+    },
+    complete:function(){
+      $(".container").removeClass('display-none');
+      $(".wrap-loading").addClass('display-none');
+    },
+    error:function(e){
+
+    },
+    timeout:1000000
+  });
+}
+</script>
+
+
+
+
+<div class="wrap-loading display-none">
+  <div><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F233FB6505786DA890A"/></div>
+</div>  
+
 <section class="text-center">
 <div class="container">
     </br>
@@ -17,11 +84,7 @@
                     <h5 class="card-title">가격 : {{list.price}}원</h5>
                     <h5 class="card-title">제조사 : {{list.maker}}</h5>
                     <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
-                    <form action="{% url 'main:reviews'%}" method="POST">
-                      <input type="hidden" name="link" value="{{list.link}}">
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-primary stretched-link">Go somewhere</button>
-                    </form>
+                    <button type="button" id="link" class="btn btn-primary stretched-link" onclick="clicked('{{list.link}}');">Go somewhere</button>
                 </div>
               </div>
             </br>
