@@ -94,9 +94,9 @@ def reviews(request):
         cnt += 1
         
         if result_bert[1] == '긍정':
-            good_comment += ' '.join(review)
+            good_comment += review
         else:
-            bad_comment += ' '.join(review)
+            bad_comment += review
 
     # print('평균점수: ', round(sum / cnt, 2))
 
@@ -130,7 +130,7 @@ def count_vectorization(token):
 def sentence_tokenizer(sentence):
     okt = Okt()
     stopwords = ['하다', '힘그셨을텐데']
-    sentence = re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", str(sentence))
+    sentence = re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", sentence)
     raw_pos_tagged = okt.pos(sentence, stem=True) # POS Tagging with stemming
 
     sentence_tokenized = []
