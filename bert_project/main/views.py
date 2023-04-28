@@ -78,8 +78,8 @@ def reviews(request):
     print(result_bert)
     
     # 긍정리뷰와 부정리뷰 분류할 빈 리스트
-    good_reviews = []
-    bad_reviews = []
+    good_comment = ''
+    bad_comment = ''
     
     # 평균 리뷰 점수를 구하고, 긍정 부정 리뷰를 분류하는 코드
     score = 0
@@ -97,9 +97,9 @@ def reviews(request):
         cnt += 1
         
         if result_bert[1] == '긍정':
-            good_reviews.append(review)
+            get_comment = ' '.join(review)
         else:
-            bad_reviews.append(review)
+            bad_comment = ' '.join(review)
     
     print('평균점수: ', round(sum / cnt, 2))
     
@@ -136,7 +136,7 @@ def reviews(request):
 
 def tokenizer(sentence):
     okt = Okt()
-    stopwords = ['하다', '힘그셨을텐데', '훌륭하다']
+    stopwords = ['하다', '힘그셨을텐데']
     sentence = re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", str(sentence))
     raw_pos_tagged = okt.pos(sentence, stem=True) # POS Tagging with stemming
 
