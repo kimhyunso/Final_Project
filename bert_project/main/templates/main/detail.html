@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
 
@@ -14,11 +15,11 @@
   }
   
   .wrap-loading div{ /*로딩 이미지*/
-      position: fixed;
-      top:50%;
-      left:50%;
-      margin-left: -21px;
-      margin-top: -21px;
+        position: fixed;
+        top:50%;
+        left:50%;
+        margin-left: -21px;
+        margin-top: -21px;
   }
 
   .display-none{
@@ -67,7 +68,10 @@ function clicked(link){
 </div>  
 
 <section class="text-center">
-  <div class="container">
+<div class="container">
+    </br>
+    </br>
+    </br>
       <div class="row">
         {% for list in lists %}
             <div class="col-lg-4">
@@ -82,10 +86,12 @@ function clicked(link){
                     <button type="button" id="link" class="btn btn-primary stretched-link" onclick="clicked('{{list.link}}');">Go somewhere</button>
                 </div>
               </div>
+            </br>
+            </br>
             </div>
         {% endfor %}
       </div>
   </div>
-</section>
+</section> 
 
 {% endblock content %}

@@ -98,6 +98,7 @@ def reviews(request):
             good_comment += review
         else:
             bad_comment += review
+    # print('평균점수: ', round(sum / cnt, 2))
 
     good_token = sentence_tokenizer(good_comment)
     bad_token = sentence_tokenizer(bad_comment)
@@ -133,7 +134,7 @@ def sentence_tokenizer(sentence):
     okt = Okt()
     stopwords = ['하다', '힘그셨을텐데']
     sentence = re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", sentence)
-    raw_pos_tagged = okt.pos(sentence, stem=True)
+    raw_pos_tagged = okt.pos(sentence, stem=True) # POS Tagging with stemming
 
     sentence_tokenized = []
 
