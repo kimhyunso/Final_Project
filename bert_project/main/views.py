@@ -17,6 +17,7 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import os
 import json
+from PIL import Image
 
 
 @require_safe
@@ -65,6 +66,7 @@ def info(request):
 @require_http_methods(['POST'])
 def reviews(request):
 
+
     jsonObject = json.loads(request.body)
     link = jsonObject.get('link')
     reviews_df = comment_reviews(link)
@@ -73,7 +75,6 @@ def reviews(request):
     model = settings.MODEL_KOBERT
 
     result_bert = predict_sentiment(reviews_df['comments'][0], tokenizer, model)
-    print(result_bert)
     
     # 긍정리뷰와 부정리뷰 분류할 빈 리스트
     good_comment = ''
@@ -83,7 +84,7 @@ def reviews(request):
     score = 0
     sum = 0
     cnt = 0
-    
+
     for review in reviews_df['comments']:
         if len(review) > 400:
             result_bert = predict_sentiment(review[-400:], tokenizer, model)
@@ -97,18 +98,20 @@ def reviews(request):
             good_comment += review
         else:
             bad_comment += review
-
     # print('평균점수: ', round(sum / cnt, 2))
 
     good_token = sentence_tokenizer(good_comment)
     bad_token = sentence_tokenizer(bad_comment)
 
     font_path = r'C:/Windows/Fonts/malgun.ttf'
-    
-    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(count_vectorization(good_token))
+
+    image_mask = np.array(Image.open('./media/test.png'))
+
+    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7, colormap='ocean').generate_from_frequencies(count_vectorization(good_token))
     wc.to_file('./media/good_reviews.png')
-    
-    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(count_vectorization(bad_token))
+
+    # image_mask = np.array(Image.open('./media/worst.png'))
+    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7, colormap='ocean').generate_from_frequencies(count_vectorization(bad_token))
     wc.to_file('./media/bad_reviews.png')
     
     context = {
@@ -121,7 +124,7 @@ def reviews(request):
 def count_vectorization(token):
     vector = TfidfVectorizer()
     bow_vect = vector.fit_transform(token)
-    word_list = vector.get_feature_names() 
+    word_list = vector.get_feature_names()
     count_list = bow_vect.toarray().sum(axis=0)
     word_count_dict = dict(zip(word_list, count_list))
     return word_count_dict
@@ -134,8 +137,10 @@ def sentence_tokenizer(sentence):
     raw_pos_tagged = okt.pos(sentence, stem=True) # POS Tagging with stemming
 
     sentence_tokenized = []
+
     for token, pos in raw_pos_tagged:
-        if (len(token) != 1) & (pos in ["Noun", "Verb", "Adverb", "Adjective"]) & (token not in stopwords):
+        if (len(token) != 1) & (pos in ["Noun", "VerbPrefix", "Verb", "Adverb", "Adjective", "Conjunction", "KoreanParticle"]) & (token not in stopwords):
             sentence_tokenized.append(token)
             
     return sentence_tokenized
+
