@@ -2,14 +2,15 @@
 {% block content %}
 
         <h1>가전제품 리뷰 기반</h1>
-        <h2>텍스트 분석 & 스코어링 및 추천 서비스 검색</h2>
+        <h2>텍스트 분석 &#38; 스코어링 및 추천 서비스 검색</h2>
     <form action="{%url 'main:info'%}" method="post">
       {% csrf_token %}
-      
+    </br>
+    </br>
       <div class="container">
           <div class="search">
+            <div class="input-group-append">
               <input type="text" name="keyword" class="form-control" placeholder="제품을 입력하세요." aria-label="Recipient's username" aria-describedby="basic-addon2">
-              <div class="input-group-append">
               <input class="btn btn-primary" type="submit" value="제출">
                 <i class="fa fa-search"></i>
           </div>
