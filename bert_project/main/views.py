@@ -108,29 +108,31 @@ def reviews(request):
     
     font_path = r'C:/Windows/Fonts/malgun.ttf'
     
-    tfidfv = TfidfVectorizer().fit_transform(good_token)
-    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(tfidfv.vocabulary_)
-    wc.to_image(os.getcwd()+'./media/good_reviews.png')
+    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(count_vectorization(good_token))
+    plt.figure(figsize=(10, 5))
+    plt.axis('off')
+    plt.imshow(wc, interpolation='bilinear')
+    wc.to_file('./media/good_reviews.png')
     
-    # filename = "good_reviews.png"
-    # wc_image = wc.to_image()
-    # with fs.open(filename, 'wb') as f:
-    #     wc_image.save(f, 'PNG')
-    
-    
-    tfidfv = TfidfVectorizer().fit_transform(bad_token)
-    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(tfidfv.vocabulary_)
-    wc.to_image(os.getcwd()+'./media/bad_reviews.png')
-    # filename = "bad_reviews.png"
-    # wc_image = wc.to_image()
-    # with fs.open(filename, 'wb') as f:
-    #     wc_image.save(f, 'PNG')
-        
-    
+    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(count_vectorization(bad_token))
+    plt.figure(figsize=(10, 5))
+    plt.axis('off')
+    plt.imshow(wc, interpolation='bilinear')
+    wc.to_file('./media/bad_reviews.png')
     
     # context = {'target_sentence':reviews_df['comments'][0], 'result_bert':result_bert}
     
     # return render(request, 'main/index.html', context)
+
+
+
+def count_vectorization(token):
+    vector = TfidfVectorizer()
+    bow_vect = vector.fit_transform(token)
+    word_list = vector.get_feature_names() 
+    count_list = bow_vect.toarray().sum(axis=0)
+    word_count_dict = dict(zip(word_list, count_list))
+    return word_count_dict
 
 
 
