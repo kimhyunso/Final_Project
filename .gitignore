@@ -28,6 +28,7 @@ $RECYCLE.BIN/
 *.exe
 API_KEY.txt
 *.chromedriver
+*.h5
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=venv

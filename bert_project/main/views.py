@@ -97,36 +97,28 @@ def reviews(request):
         cnt += 1
         
         if result_bert[1] == '긍정':
-            good_reviews.append(review)
+            good_reviews += review
         else:
-            bad_reviews.append(review)
-    
-    print('평균점수: ', round(sum / cnt, 2))
+            bad_reviews += review
+            
+    # print('평균점수: ', round(sum / cnt, 2))
     
     good_token = tokenizer(good_reviews)
     bad_token = tokenizer(bad_reviews)
     
     font_path = r'C:/Windows/Fonts/malgun.ttf'
     
-    tfidfv = TfidfVectorizer().fit_transform(good_token)
-    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(tfidfv.vocabulary_)
-    wc.to_image(os.getcwd()+'./media/good_reviews.png')
+    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(count_vectorization(good_token))
+    plt.figure(figsize=(10, 5))
+    plt.axis('off')
+    plt.imshow(wc, interpolation='bilinear')
+    wc.to_file('./media/good_reviews.png')
     
-    # filename = "good_reviews.png"
-    # wc_image = wc.to_image()
-    # with fs.open(filename, 'wb') as f:
-    #     wc_image.save(f, 'PNG')
-    
-    
-    tfidfv = TfidfVectorizer().fit_transform(bad_token)
-    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(tfidfv.vocabulary_)
-    wc.to_image(os.getcwd()+'./media/bad_reviews.png')
-    # filename = "bad_reviews.png"
-    # wc_image = wc.to_image()
-    # with fs.open(filename, 'wb') as f:
-    #     wc_image.save(f, 'PNG')
-        
-    
+    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7).generate_from_frequencies(count_vectorization(bad_token))
+    plt.figure(figsize=(10, 5))
+    plt.axis('off')
+    plt.imshow(wc, interpolation='bilinear')
+    wc.to_file('./media/bad_reviews.png')
     
     # context = {'target_sentence':reviews_df['comments'][0], 'result_bert':result_bert}
     
@@ -134,10 +126,20 @@ def reviews(request):
 
 
 
+def count_vectorization(token):
+    vector = TfidfVectorizer()
+    bow_vect = vector.fit_transform(token)
+    word_list = vector.get_feature_names() 
+    count_list = bow_vect.toarray().sum(axis=0)
+    word_count_dict = dict(zip(word_list, count_list))
+    return word_count_dict
+
+
+
 def tokenizer(sentence):
     okt = Okt()
     stopwords = ['하다', '힘그셨을텐데', '훌륭하다']
-    sentence = re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", str(sentence))
+    sentence = re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", sentence)
     raw_pos_tagged = okt.pos(sentence, stem=True) # POS Tagging with stemming
 
     sentence_tokenized = []
