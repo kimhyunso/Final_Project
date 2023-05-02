@@ -70,6 +70,7 @@ def reviews(request):
     jsonObject = json.loads(request.body)
     link = jsonObject.get('link')
     reviews_df = comment_reviews(link)
+    reviews_df.to_csv('./filename.csv', index=False)
 
     tokenizer = settings.TOKENIZER_KOBERT
     model = settings.MODEL_KOBERT
