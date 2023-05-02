@@ -54,6 +54,7 @@ function clicked(link){
       $(".footer3").removeClass('display-none');
     },
     error:function(e){
+      console.log(e);
       
     },
     timeout:1000000
@@ -86,7 +87,7 @@ function clicked(link){
                   <p class="mbr-text mbr-fonts-style mt-3 display-7">{{list.price}}<br></p>
                   <p class="mbr-text mbr-fonts-style mt-3 display-7">{{list.maker}}<br></p>
               </div>
-              <div class="mbr-section-btn item-footer mt-2"><a class="btn item-btn btn-primary display-4">입력</a></div>
+              <div class="mbr-section-btn item-footer mt-2"><a class="btn item-btn btn-primary display-4">클릭</a></div>
           </div>
       </div>
         {% endfor %}

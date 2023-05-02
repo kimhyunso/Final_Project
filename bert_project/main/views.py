@@ -17,7 +17,7 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import os
 import json
-from PIL import Image
+
 
 
 @require_safe
@@ -111,7 +111,9 @@ def reviews(request):
     counter = Counter(bad_token)
     bad_frequency = counter.most_common(n)
 
-    font_path = r'C:/Windows/Fonts/malgun.ttf'
+    # font_path = r'C:/Windows/Fonts/malgun.ttf'
+    font_path = r'C:/Windows/Fonts/malgunbd.ttf'
+
 
     wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7, colormap='ocean').generate_from_frequencies(count_vectorization(good_token))
     wc.to_file('./media/good_reviews.png')
