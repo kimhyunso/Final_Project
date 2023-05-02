@@ -27,7 +27,6 @@
 </style>
     
 
-
 <script>
 function clicked(link){
   const param = {
@@ -59,40 +58,35 @@ function clicked(link){
 }
 </script>
 
-
-
-
 <div class="wrap-loading display-none">
   <div><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F233FB6505786DA890A"/></div>
 </div>  
 
-
-<section data-bs-version="5.1" class="content2 cid-tCUP13ec6e" id="content2-2">
-    
-  <div class="mbr-overlay"></div>
-  <div class="container">
-      <div class="mbr-section-head">
-          <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>제품을 클릭하세요.</strong></h4>
-      </div>
-
-      <div class="row mt-4">
-        {% for list in lists  %}
-        <div class="item features-image сol-12 col-md-6 col-lg-4">
-          <div class="item-wrapper">
-              <div class="item-img">
-                  <img src="{{list.imageURL}}" alt="Mobirise Website Builder" title="">
+<section class="text-center">
+<div class="container">
+    </br>
+    </br>
+    </br>
+      <div class="row">
+        {% for list in lists %}
+            <div class="col-lg-4">
+              <div class="card" style="background: #7bc4ff">
+                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                  <div class="features-icons-icon d-flex"><i class="bi-window m-auto text-primary"></i></div>
+                    <img src={{list.imageURL}} class="img-thumbnail" alt="...">
+                    <h5 class="card-title">제목 : {{list.title}}</h5>
+                    <h5 class="card-title">가격 : {{list.price}}원</h5>
+                    <h5 class="card-title">제조사 : {{list.maker}}</h5>
+                    <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
+                    <button type="button" id="link" class="btn btn-primary stretched-link" onclick="clicked('{{list.link}}');">Go somewhere</button>
+                </div>
               </div>
-              <div class="item-content">
-                  <p class="mbr-text mbr-fonts-style mt-3 display-7">{{list.title}}<br></p>
-                  <p class="mbr-text mbr-fonts-style mt-3 display-7">{{list.price}}<br></p>
-                  <p class="mbr-text mbr-fonts-style mt-3 display-7">{{list.maker}}<br></p>
-              </div>
-              <div class="mbr-section-btn item-footer mt-2"><a onclick="clicked('{{list.link}}');" class="btn item-btn btn-primary display-4">입력</a></div>
-          </div>
-      </div>
+            </br>
+            </br>
+            </div>
         {% endfor %}
       </div>
   </div>
-</section>
+</section> 
 
 {% endblock content %}
