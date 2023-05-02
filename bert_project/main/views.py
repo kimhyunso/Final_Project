@@ -143,4 +143,3 @@ def sentence_tokenizer(sentence):
             sentence_tokenized.append(token)
             
     return sentence_tokenized
-
