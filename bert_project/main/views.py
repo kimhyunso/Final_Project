@@ -108,7 +108,7 @@ def reviews(request):
     counter = Counter(bad_token)
     bad_frequency = counter.most_common(n)
 
-    font_path = r'C:/Windows/Fonts/malgun.ttf'
+    font_path = r'C:/Windows/Fonts/malgunbd.ttf'
 
 
     icon = Image.open('./media/thumb_up.png')
