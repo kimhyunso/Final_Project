@@ -28,39 +28,46 @@
     
 <script>
 function clicked(link){
-  const param = {
-    'link' : link
-  }
-  $.ajax({
-    url : "{% url 'main:reviews' %}",
-    type : 'POST',
-    headers : {
-      'X-CSRFTOKEN' : '{{csrf_token}}'
-    },
-    data : JSON.stringify(param),
-    success:function(context){
-      data = JSON.stringify(context);
-      let url = "{% url 'main:result' %}?data="+data;
-      context['']
 
+    const param = {
+        'link' : link
+    }
+    $.ajax({
+        url : "{% url 'main:reviews' %}",
+        type : 'POST',
+        headers : {
+        'X-CSRFTOKEN' : '{{csrf_token}}'
+        },
+        data : JSON.stringify(param),
+        success:function(context){
 
-      location.replace(url);
-    },
-    beforeSend:function(){
-      $(".content2").addClass('display-none');
-      $(".footer3").addClass('display-none');
-      $(".wrap-loading").removeClass('display-none');
-    },
-    complete:function(){
-      $(".content2").removeClass('display-none');
-      $(".wrap-loading").addClass('display-none');
-      $(".footer3").removeClass('display-none');
-    },
-    error:function(e){
-      console.log(e);
-      
-    },
-    timeout:1000000
+            var score = context['result_bert'][0];
+            var text = context['result_bert'][1];
+            var good_comment = []
+            var bad_comment = []
+
+            for (var i=0; i<5; i++) {
+                good_comment.push(context['good_frequency'][i][0])
+                bad_comment.push(context['good_frequency'][i][0])
+            }
+
+            let url = "{% url 'main:result' %}?score="+score+"&text="+text+"&good_comment_1="+good_comment[0]+"&good_comment_2="+good_comment[1]+"&good_comment_3="+good_comment[2]+"&good_comment_4="+good_comment[3]+"&good_comment_5="+good_comment[4] + "&bad_comment_1="+bad_comment[0]+"&bad_comment_2="+bad_comment[1]+"&bad_comment_3="+bad_comment[2]+"&bad_comment_4="+bad_comment[3]+"&bad_comment_5="+bad_comment[4];
+            location.replace(url);
+        },
+        beforeSend:function(){
+            $(".content2").addClass('display-none');
+            $(".footer3").addClass('display-none');
+            $(".wrap-loading").removeClass('display-none');
+        },
+        complete:function(){
+            $(".content2").removeClass('display-none');
+            $(".wrap-loading").addClass('display-none');
+            $(".footer3").removeClass('display-none');
+        },
+        error:function(e){
+            console.log(e);
+        },
+        timeout:1000000
   });
 }
 </script>

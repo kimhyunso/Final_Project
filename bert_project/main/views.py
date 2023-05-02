@@ -46,6 +46,7 @@ def info(request):
     keyword = request.POST['keyword']
     info_df = search(keyword)
     conn = sqlite3.connect('db.sqlite3')
+
     try:
         cursor = conn.cursor()
         sql = "INSERT OR IGNORE INTO main_productinfo(title, link, imageURL, price, maker, category1, category2) VALUES(?, ?, ?, ?, ?, ?, ?);"
@@ -111,10 +112,7 @@ def reviews(request):
     counter = Counter(bad_token)
     bad_frequency = counter.most_common(n)
 
-    # font_path = r'C:/Windows/Fonts/malgun.ttf'
     font_path = r'C:/Windows/Fonts/malgunbd.ttf'
-
-
 
     icon = Image.open('./media/thumb_up.png')
     mask = Image.new("RGB", icon.size, (255,255,255))
@@ -169,8 +167,20 @@ def sentence_tokenizer(sentence):
 
 @require_http_methods(['GET', 'POST'])
 def result(request):
-    request.GET['data']
 
-
-
-    return render(request, 'main/result.html')
+    print(request.GET['score'] + request.GET['text'] + request.GET['good_comment_1'] + request.GET['good_comment_2'])
+    context = {
+        'score' : request.GET['score'],
+        'text' : request.GET['text'],
+        'good_commnet_1' : request.GET['good_comment_1'],
+        'good_commnet_2' : request.GET['good_comment_2'],
+        'good_commnet_3' : request.GET['good_comment_3'],
+        'good_commnet_4' : request.GET['good_comment_4'],
+        'good_commnet_5' : request.GET['good_comment_5'],
+        'bad_commnet_1' : request.GET['bad_comment_1'],
+        'bad_commnet_2' : request.GET['bad_comment_2'],
+        'bad_commnet_3' : request.GET['bad_comment_3'],
+        'bad_commnet_4' : request.GET['bad_comment_4'],
+        'bad_commnet_4' : request.GET['bad_comment_5'],
+    }
+    return render(request, 'main/result.html', context)
