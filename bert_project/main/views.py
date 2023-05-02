@@ -17,6 +17,9 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import os
 import json
+from PIL import Image
+
+
 
 
 
