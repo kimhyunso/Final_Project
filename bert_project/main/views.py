@@ -20,6 +20,9 @@ import json
 from PIL import Image
 
 
+
+
+
 @require_safe
 def index(request):
     return render(request, 'main/index.html')
@@ -109,7 +112,6 @@ def reviews(request):
     bad_frequency = counter.most_common(n)
 
     font_path = r'C:/Windows/Fonts/malgunbd.ttf'
-
 
     icon = Image.open('./media/thumb_up.png')
     mask = Image.new("RGB", icon.size, (255,255,255))
