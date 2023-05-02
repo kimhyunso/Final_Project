@@ -41,6 +41,9 @@ function clicked(link){
     success:function(context){
       data = JSON.stringify(context);
       let url = "{% url 'main:result' %}?data="+data;
+      context['']
+
+
       location.replace(url);
     },
     beforeSend:function(){
