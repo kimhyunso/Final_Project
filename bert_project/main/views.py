@@ -103,9 +103,15 @@ def reviews(request):
     good_token = sentence_tokenizer(good_comment)
     bad_token = sentence_tokenizer(bad_comment)
 
-    font_path = r'C:/Windows/Fonts/malgun.ttf'
+    n = 5
 
-    image_mask = np.array(Image.open('./media/test.png'))
+    counter = Counter(good_token)
+    good_frequency = counter.most_common(n)
+
+    counter = Counter(bad_token)
+    bad_frequency = counter.most_common(n)
+
+    font_path = r'C:/Windows/Fonts/malgun.ttf'
 
     wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7, colormap='ocean').generate_from_frequencies(count_vectorization(good_token))
     wc.to_file('./media/good_reviews.png')
@@ -116,6 +122,8 @@ def reviews(request):
     
     context = {
         'result_bert' : result_bert,
+        'good_frequency' : good_frequency,
+        'bad_frequency' : bad_frequency,
     }
 
     return JsonResponse(context)
@@ -143,3 +151,11 @@ def sentence_tokenizer(sentence):
             sentence_tokenized.append(token)
             
     return sentence_tokenized
+
+@require_http_methods(['GET', 'POST'])
+def result(request):
+    print('잘 성공했습니다!!')
+
+
+
+    return render(request, 'main/result.html')
