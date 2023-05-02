@@ -65,12 +65,9 @@ def info(request):
 
 @require_http_methods(['POST'])
 def reviews(request):
-
-
     jsonObject = json.loads(request.body)
     link = jsonObject.get('link')
     reviews_df = comment_reviews(link)
-    reviews_df.to_csv('./filename.csv', index=False)
 
     tokenizer = settings.TOKENIZER_KOBERT
     model = settings.MODEL_KOBERT
@@ -113,12 +110,25 @@ def reviews(request):
 
     font_path = r'C:/Windows/Fonts/malgun.ttf'
 
-    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7, colormap='ocean').generate_from_frequencies(count_vectorization(good_token))
+
+    icon = Image.open('./media/thumb_up.png')
+    mask = Image.new("RGB", icon.size, (255,255,255))
+    mask.paste(icon,icon)
+    mask = np.array(mask)
+
+    wc = WordCloud(font_path=font_path, background_color='white', colormap='ocean', mask=mask).generate_from_frequencies(count_vectorization(good_token))
     wc.to_file('./media/good_reviews.png')
 
-    # image_mask = np.array(Image.open('./media/worst.png'))
-    wc = WordCloud(font_path=font_path, background_color='white', max_font_size=30, scale=7, colormap='ocean').generate_from_frequencies(count_vectorization(bad_token))
+
+    icon = Image.open('./media/thumb_down.png')
+    mask = Image.new("RGB", icon.size, (255,255,255))
+    mask.paste(icon,icon)
+    mask = np.array(mask)
+
+    wc = WordCloud(font_path=font_path, background_color='white', colormap='ocean', mask=mask).generate_from_frequencies(count_vectorization(bad_token))
     wc.to_file('./media/bad_reviews.png')
+
+
     
     context = {
         'result_bert' : result_bert,
@@ -154,7 +164,7 @@ def sentence_tokenizer(sentence):
 
 @require_http_methods(['GET', 'POST'])
 def result(request):
-    print('잘 성공했습니다!!')
+    request.GET['data']
 
 
 
