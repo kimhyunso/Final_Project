@@ -40,8 +40,7 @@ function clicked(link){
     data : JSON.stringify(param),
     success:function(context){
       data = JSON.stringify(context);
-      let url = "{% url 'main:result' %}?data="+data;
-      context['']
+      let url = "{% url 'main:result' %}?score="+data;
 
 
       location.replace(url);
@@ -86,9 +85,9 @@ function clicked(link){
                   <img src="{{list.imageURL}}" alt="Mobirise Website Builder" title="">
               </div>
               <div class="item-content">
-                  <p class="mbr-text mbr-fonts-style mt-3 display-7">{{list.title}}<br></p>
-                  <p class="mbr-text mbr-fonts-style mt-3 display-7">{{list.price}}<br></p>
-                  <p class="mbr-text mbr-fonts-style mt-3 display-7">{{list.maker}}<br></p>
+                  <p class="mbr-text mbr-fonts-style mt-3 display-7">모델 : {{list.title}}<br></p>
+                  <p class="mbr-text mbr-fonts-style mt-3 display-7">가격 : {{list.price}}원<br></p>
+                  <p class="mbr-text mbr-fonts-style mt-3 display-7">제조사 : {{list.maker}}<br></p>
               </div>
               <div class="mbr-section-btn item-footer mt-2"><a class="btn item-btn btn-primary display-4">클릭</a></div>
           </div>
