@@ -1028,7 +1028,7 @@ a {
   }
 }
 .cid-tCUOPjvFdu {
-  background-image: url("/images/electronics-1259x745.jpg");
+  background-image: url("/static/images/electronics-1259x745.jpg");
 }
 .cid-tCUOPjvFdu .mbr-text,
 .cid-tCUOPjvFdu .mbr-section-btn {
@@ -1047,7 +1047,7 @@ a {
 .cid-tCUP13ec6e {
   padding-top: 6rem;
   padding-bottom: 6rem;
-  background-image: url("/images/electronics.jpg");
+  background-image: url("/static/images/electronics.jpg");
 }
 .cid-tCUP13ec6e .mbr-overlay {
   background: #bed3f9;
@@ -1056,7 +1056,6 @@ a {
 .cid-tCUP13ec6e img,
 .cid-tCUP13ec6e .item-img {
   height: 100%;
-  height: 300px;
   object-fit: cover;
 }
 .cid-tCUP13ec6e .item:focus,
@@ -1115,7 +1114,7 @@ a {
 .cid-tCXmOcFnIx {
   padding-top: 6rem;
   padding-bottom: 6rem;
-  background-image: url("/images/electronics-1259x745.jpg");
+  background-image: url("/static/images/electronics-1259x745.jpg");
 }
 .cid-tCXmOcFnIx .mbr-overlay {
   background: #bed3f9;
