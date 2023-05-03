@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 import os
 import json
 from PIL import Image
+from django.db.models import Q
 
 
 
@@ -31,7 +32,7 @@ def index(request):
 @require_safe
 def detail(request, keyword):
     context = {
-        'lists' : ProductInfo.objects.distinct().filter(category1=keyword),
+        'lists' : ProductInfo.objects.distinct().filter(Q(title__icontains=keyword) | Q(category1=keyword)),
     }
     return render(request, 'main/detail.html', context)
 
@@ -101,6 +102,9 @@ def reviews(request):
         else:
             bad_comment += review
 
+    
+    
+
     good_token = sentence_tokenizer(good_comment)
     bad_token = sentence_tokenizer(bad_comment)
 
@@ -132,9 +136,11 @@ def reviews(request):
     wc.to_file('./media/bad_reviews.png')
 
 
-    
+    score = round(sum / cnt)
+
     context = {
-        'result_bert' : result_bert,
+        'score' : score,
+        'eval' : result_bert[1],
         'good_frequency' : good_frequency,
         'bad_frequency' : bad_frequency,
     }
@@ -168,10 +174,11 @@ def sentence_tokenizer(sentence):
 @require_http_methods(['GET', 'POST'])
 def result(request):
 
-    print(request.GET['score'] + request.GET['text'] + request.GET['good_comment_1'] + request.GET['good_comment_2'])
+    print(request.GET['good_comment_1'])
+
     context = {
         'score' : request.GET['score'],
-        'text' : request.GET['text'],
+        'text' : request.GET['eval'],
         'good_commnet_1' : request.GET['good_comment_1'],
         'good_commnet_2' : request.GET['good_comment_2'],
         'good_commnet_3' : request.GET['good_comment_3'],

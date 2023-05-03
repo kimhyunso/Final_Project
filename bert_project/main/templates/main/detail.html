@@ -41,8 +41,9 @@ function clicked(link){
         data : JSON.stringify(param),
         success:function(context){
 
-            var score = context['result_bert'][0];
-            var text = context['result_bert'][1];
+            var eval = context['eval'];
+            var socre = context['score'];
+
             var good_comment = []
             var bad_comment = []
 
@@ -51,7 +52,7 @@ function clicked(link){
                 bad_comment.push(context['good_frequency'][i][0])
             }
 
-            let url = "{% url 'main:result' %}?score="+score+"&text="+text+"&good_comment_1="+good_comment[0]+"&good_comment_2="+good_comment[1]+"&good_comment_3="+good_comment[2]+"&good_comment_4="+good_comment[3]+"&good_comment_5="+good_comment[4] + "&bad_comment_1="+bad_comment[0]+"&bad_comment_2="+bad_comment[1]+"&bad_comment_3="+bad_comment[2]+"&bad_comment_4="+bad_comment[3]+"&bad_comment_5="+bad_comment[4];
+            let url = "{% url 'main:result' %}?score="+score+"&eval="+eval+"&good_comment_1="+good_comment[0]+"&good_comment_2="+good_comment[1]+"&good_comment_3="+good_comment[2]+"&good_comment_4="+good_comment[3]+"&good_comment_5="+good_comment[4] + "&bad_comment_1="+bad_comment[0]+"&bad_comment_2="+bad_comment[1]+"&bad_comment_3="+bad_comment[2]+"&bad_comment_4="+bad_comment[3]+"&bad_comment_5="+bad_comment[4];
             location.replace(url);
         },
         beforeSend:function(){
