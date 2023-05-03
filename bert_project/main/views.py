@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 import os
 import json
 from PIL import Image
+from django.db.models import Q
 
 
 
@@ -31,7 +32,7 @@ def index(request):
 @require_safe
 def detail(request, keyword):
     context = {
-        'lists' : ProductInfo.objects.distinct().filter(category1=keyword),
+        'lists' : ProductInfo.objects.distinct().filter(Q(title__icontains=keyword) | Q(category1=keyword)),
     }
     return render(request, 'main/detail.html', context)
 
@@ -46,6 +47,7 @@ def info(request):
     keyword = request.POST['keyword']
     info_df = search(keyword)
     conn = sqlite3.connect('db.sqlite3')
+
     try:
         cursor = conn.cursor()
         sql = "INSERT OR IGNORE INTO main_productinfo(title, link, imageURL, price, maker, category1, category2) VALUES(?, ?, ?, ?, ?, ?, ?);"
@@ -100,6 +102,9 @@ def reviews(request):
         else:
             bad_comment += review
 
+    
+    
+
     good_token = sentence_tokenizer(good_comment)
     bad_token = sentence_tokenizer(bad_comment)
 
@@ -111,10 +116,7 @@ def reviews(request):
     counter = Counter(bad_token)
     bad_frequency = counter.most_common(n)
 
-    # font_path = r'C:/Windows/Fonts/malgun.ttf'
     font_path = r'C:/Windows/Fonts/malgunbd.ttf'
-
-
 
     icon = Image.open('./media/thumb_up.png')
     mask = Image.new("RGB", icon.size, (255,255,255))
@@ -134,9 +136,11 @@ def reviews(request):
     wc.to_file('./media/bad_reviews.png')
 
 
-    
+    score = round(sum / cnt)
+
     context = {
-        'result_bert' : result_bert,
+        'score' : score,
+        'eval' : result_bert[1],
         'good_frequency' : good_frequency,
         'bad_frequency' : bad_frequency,
     }
@@ -169,8 +173,16 @@ def sentence_tokenizer(sentence):
 
 @require_http_methods(['GET', 'POST'])
 def result(request):
-    request.GET['data']
 
 
 
-    return render(request, 'main/result.html')
+    good_comments = request.GET['good_comment'].split(',')
+    bad_comments = request.GET['bad_comment'].split(',')
+
+    context = {
+        'score' : request.GET['score'],
+        'eval' : request.GET['eval'],
+        'good_comments' : good_comments,
+        'bad_comments' : bad_comments,
+    }
+    return render(request, 'main/result.html', context)

@@ -8,3 +8,4 @@ class ProductInfo(models.Model):
     maker = models.TextField()
     category1 = models.TextField()
     category2 = models.TextField()
+    
