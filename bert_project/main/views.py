@@ -174,20 +174,15 @@ def sentence_tokenizer(sentence):
 @require_http_methods(['GET', 'POST'])
 def result(request):
 
-    print(request.GET['good_comment_1'])
+
+
+    good_comments = request.GET['good_comment'].split(',')
+    bad_comments = request.GET['bad_comment'].split(',')
 
     context = {
         'score' : request.GET['score'],
-        'text' : request.GET['eval'],
-        'good_commnet_1' : request.GET['good_comment_1'],
-        'good_commnet_2' : request.GET['good_comment_2'],
-        'good_commnet_3' : request.GET['good_comment_3'],
-        'good_commnet_4' : request.GET['good_comment_4'],
-        'good_commnet_5' : request.GET['good_comment_5'],
-        'bad_commnet_1' : request.GET['bad_comment_1'],
-        'bad_commnet_2' : request.GET['bad_comment_2'],
-        'bad_commnet_3' : request.GET['bad_comment_3'],
-        'bad_commnet_4' : request.GET['bad_comment_4'],
-        'bad_commnet_4' : request.GET['bad_comment_5'],
+        'eval' : request.GET['eval'],
+        'good_comments' : good_comments,
+        'bad_comments' : bad_comments,
     }
     return render(request, 'main/result.html', context)

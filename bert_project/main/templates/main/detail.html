@@ -42,17 +42,17 @@ function clicked(link){
         success:function(context){
 
             var eval = context['eval'];
-            var socre = context['score'];
+            var score = context['score'];
 
-            var good_comment = []
-            var bad_comment = []
+            var good_comment = "";
+            var bad_comment = "";
 
             for (var i=0; i<5; i++) {
-                good_comment.push(context['good_frequency'][i][0])
-                bad_comment.push(context['good_frequency'][i][0])
+                good_comment += context['good_frequency'][i][0] + ",";
+                bad_comment += context['good_frequency'][i][0] + ",";
             }
 
-            let url = "{% url 'main:result' %}?score="+score+"&eval="+eval+"&good_comment_1="+good_comment[0]+"&good_comment_2="+good_comment[1]+"&good_comment_3="+good_comment[2]+"&good_comment_4="+good_comment[3]+"&good_comment_5="+good_comment[4] + "&bad_comment_1="+bad_comment[0]+"&bad_comment_2="+bad_comment[1]+"&bad_comment_3="+bad_comment[2]+"&bad_comment_4="+bad_comment[3]+"&bad_comment_5="+bad_comment[4];
+            let url = "{% url 'main:result' %}?score="+score +"&eval="+eval+"&good_comment="+good_comment+"&bad_comment="+bad_comment;
             location.replace(url);
         },
         beforeSend:function(){
