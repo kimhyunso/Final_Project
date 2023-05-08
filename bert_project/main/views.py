@@ -136,7 +136,7 @@ def reviews(request):
     wc.to_file('./media/bad_reviews.png')
 
 
-    score = round(sum / cnt)
+    score = '%.2f' % (sum / cnt)
 
     context = {
         'score' : score,
@@ -159,14 +159,14 @@ def count_vectorization(token):
 
 def sentence_tokenizer(sentence):
     okt = Okt()
-    stopwords = ['하다', '힘그셨을텐데']
+    stopwords = ['하다', '힘그셨을텐데', '세탁기', '제품', '있다', '자다', '배송', '기사', '없다', '같다', '가구', '해주다', '되다', '너무', '작다', '설치', '않다', '되다', '되어다']
     sentence = re.sub("[^\s0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]", "", sentence)
     raw_pos_tagged = okt.pos(sentence, stem=True)
 
     sentence_tokenized = []
 
     for token, pos in raw_pos_tagged:
-        if (len(token) != 1) & (pos in ["Noun", "VerbPrefix", "Verb", "Adverb", "Adjective", "Conjunction", "KoreanParticle"]) & (token not in stopwords):
+        if (len(token) != 1) & (pos in ["Noun", "VerbPrefix", "Adverb", "Adjective"]) & (token not in stopwords):
             sentence_tokenized.append(token)
             
     return sentence_tokenized

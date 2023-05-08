@@ -47,7 +47,7 @@ function clicked(link){
 
         for (var i=0; i<5; i++) {
             good_comment += context['good_frequency'][i][0] + ",";
-            bad_comment += context['good_frequency'][i][0] + ",";
+            bad_comment += context['bad_frequency'][i][0] + ",";
         }
 
         let url = "{% url 'main:result' %}?score="+score +"&eval="+eval+"&good_comment="+good_comment+"&bad_comment="+bad_comment;

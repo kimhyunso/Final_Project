@@ -1077,11 +1077,12 @@ a {
 @media (min-width: 992px) {
   .cid-tCUP13ec6e .item-wrapper .item-content {
     padding: 2rem 2rem 0;
-    background-color: rgb(158, 188, 242);
+    background: #b0ccff;
+    
   }
   .cid-tCUP13ec6e .item-wrapper .item-footer {
     padding: 0 2rem 2rem;
-    background-color: rgb(158, 188, 242);
+    background: #b0ccff;
     text-align: center;
   }
 }
