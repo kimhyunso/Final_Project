@@ -57,7 +57,8 @@ def comment_reviews(link):
     # time.sleep(2.3)
     
     # jys 대기 추가#####
-    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#wrap > div.product_bridge_product__n_89z > a:nth-child(5)')))
+    print(link)
+    element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '#wrap > div.product_bridge_product__n_89z > a:nth-child(5)')))
     element.click()
     ###################
 
