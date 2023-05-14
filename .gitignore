@@ -28,6 +28,7 @@ $RECYCLE.BIN/
 *.exe
 API_KEY.txt
 *.chromedriver
+*.h5
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=venv
@@ -45,6 +46,7 @@ API_KEY.txt
 pyvenv.cfg
 .venv
 pip-selfcheck.json
+migrations
 
 # End of https://www.toptal.com/developers/gitignore/api/venv
 
@@ -64,7 +66,6 @@ __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
@@ -218,6 +219,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+*.h5
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

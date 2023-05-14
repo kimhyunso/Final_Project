@@ -1,32 +1,67 @@
 {% load static %}
-<!DOCTYPE html>
+
 <html lang="ko">
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Mobirise v5.6.3, mobirise.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="description" content="">
     <title>가전제품 리뷰</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="{%static 'css/style_one.css'%}">
+    <link rel="stylesheet" href="{%static 'assets/bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{%static 'assets/bootstrap/css/bootstrap-grid.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap-reboot.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/parallax/jarallax.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/dropdown/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/socicon/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900&display=swap"></noscript>
+    <link rel="preload" as="style" href="{% static 'assets/mobirise/css/mbr-additional.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr-additional.css' %}" type="text/css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
-            </li>
-          </ul>
-        </ul>
-        </div>
-      </div>
-      </nav class="center">
+    
+    <section data-bs-version="5.1" class="menu menu3 cid-tCUOSMEvjU" once="menu" id="menu3-1">
+        <nav class="navbar navbar-dropdown navbar-expand-lg">
+            <div class="container">
+                <div class="navbar-brand">
+                    
+                    <span class="navbar-caption-wrap"><a class="navbar-caption text-black display-5" href="/">Electronics</a></span>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item"><a class="nav-link link text-black display-7" href="/">Home&nbsp;</a></li></ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+      
 
-      {% block content %}{% endblock content %}
+  {% block content %}{% endblock content %}
+
+
+<section data-bs-version="5.1" class="footer3 cid-sFAOjz8nX7" once="footers" id="footer3-d">
+    <div class="container">
+        <div class="media-container-row align-center mbr-white">
+            <div class="row row-copirayt">
+                <p class="mbr-text mb-0 mbr-fonts-style mbr-white align-center display-7">
+                    © Copyright 2023 Mobirise. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
 </html>
 </body>
